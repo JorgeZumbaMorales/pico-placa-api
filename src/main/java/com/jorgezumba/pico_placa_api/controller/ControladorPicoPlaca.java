@@ -11,7 +11,7 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.http.ResponseEntity;
 @RestController
 @RequestMapping("/api/pico-placa")
-@CrossOrigin(origins = "http://localhost:4200")
+@CrossOrigin(origins = "*")
 public class ControladorPicoPlaca {
 
     private final ServicioPicoPlaca servicio;
