@@ -29,7 +29,7 @@ public class HistorialConsulta {
         this.fechaRegistro = LocalDateTime.now();
     }
 
-    // getters y setters
+
 
     public Long getId() { return id; }
 

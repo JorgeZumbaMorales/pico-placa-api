@@ -1,6 +1,8 @@
 package com.jorgezumba.pico_placa_api.service;
 
 import org.springframework.stereotype.Service;
+
+import com.jorgezumba.pico_placa_api.dto.HistorialConsultaRespuesta;
 import com.jorgezumba.pico_placa_api.entity.HistorialConsulta;
 import com.jorgezumba.pico_placa_api.exception.RegistroNoEncontradoException;
 import com.jorgezumba.pico_placa_api.repository.HistorialConsultaRepository;
@@ -13,6 +15,7 @@ import org.springframework.data.domain.Pageable;
 @Service
 public class ServicioPicoPlaca {
     private final HistorialConsultaRepository repositorio;
+
     public boolean estaPermitido(String placa, LocalDateTime fechaHora) {
 
         validarFecha(fechaHora);
@@ -38,7 +41,7 @@ public class ServicioPicoPlaca {
 
     private void validarFecha(LocalDateTime fechaHora) {
         if (fechaHora.isBefore(LocalDateTime.now())) {
-            throw new IllegalArgumentException("La fecha no puede estar en el pasado");
+            throw new IllegalArgumentException("La fecha y hora no pueden ser anteriores a la actual.");
         }
     }
 
@@ -64,11 +67,19 @@ public class ServicioPicoPlaca {
     }
 
     private boolean esHorarioRestringido(LocalTime hora) {
-        return (hora.isAfter(LocalTime.of(7, 0)) && hora.isBefore(LocalTime.of(9, 30))) ||
-               (hora.isAfter(LocalTime.of(16, 0)) && hora.isBefore(LocalTime.of(19, 30)));
+
+        LocalTime inicioManana = LocalTime.of(6, 0);
+        LocalTime finManana = LocalTime.of(9, 30);
+
+        LocalTime inicioTarde = LocalTime.of(16, 0);
+        LocalTime finTarde = LocalTime.of(20, 0);
+
+        boolean enManana = !hora.isBefore(inicioManana) && !hora.isAfter(finManana);
+        boolean enTarde = !hora.isBefore(inicioTarde) && !hora.isAfter(finTarde);
+
+        return enManana || enTarde;
     }
     
-
     public ServicioPicoPlaca(HistorialConsultaRepository repositorio) {
         this.repositorio = repositorio;
     }
@@ -82,9 +93,17 @@ public class ServicioPicoPlaca {
 
     repositorio.save(historial);
     }
-    public Page<HistorialConsulta> obtenerHistorial(Pageable pageable) {
-        return repositorio.findAll(pageable);
-    }
+
+    public Page<HistorialConsultaRespuesta> obtenerHistorial(Pageable pageable) {
+
+    return repositorio.findAll(pageable)
+            .map(historial -> new HistorialConsultaRespuesta(
+                    historial.getId(),
+                    historial.getPlaca(),
+                    historial.getFechaHoraConsulta(),
+                    historial.isPuedeCircular()
+            ));
+}
 
     public void eliminarPorId(Long id) {
         if (!repositorio.existsById(id)) {

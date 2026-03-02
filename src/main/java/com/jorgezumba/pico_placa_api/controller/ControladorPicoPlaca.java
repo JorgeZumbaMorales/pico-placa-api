@@ -1,11 +1,11 @@
 package com.jorgezumba.pico_placa_api.controller;
 
 import com.jorgezumba.pico_placa_api.dto.SolicitudPicoPlaca;
+import com.jorgezumba.pico_placa_api.dto.HistorialConsultaRespuesta;
 import com.jorgezumba.pico_placa_api.dto.RespuestaPicoPlaca;
 import com.jorgezumba.pico_placa_api.service.ServicioPicoPlaca;
 import jakarta.validation.Valid;
 import org.springframework.web.bind.annotation.*;
-import com.jorgezumba.pico_placa_api.entity.HistorialConsulta;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.http.ResponseEntity;
@@ -40,19 +40,19 @@ public class ControladorPicoPlaca {
     }
 
     @GetMapping("/historial")
-    public Page<HistorialConsulta> obtenerHistorial(Pageable pageable) {
+    public Page<HistorialConsultaRespuesta> obtenerHistorial(Pageable pageable) {
         return servicio.obtenerHistorial(pageable);
     }
 
     @DeleteMapping("/historial/{id}")
     public ResponseEntity<Void> eliminarPorId(@PathVariable Long id) {
         servicio.eliminarPorId(id);
-        return ResponseEntity.noContent().build(); // 204
+        return ResponseEntity.noContent().build(); 
     }
 
     @DeleteMapping("/historial")
     public ResponseEntity<Void> eliminarTodo() {
         servicio.eliminarTodo();
-        return ResponseEntity.noContent().build(); // 204
+        return ResponseEntity.noContent().build(); 
     }
 }
