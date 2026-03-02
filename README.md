@@ -58,13 +58,13 @@ Body ejemplo:
 ## ⚙️ Ejecutar Localmente (Backend)
 
 1. Clonar repositorio:
-
+```bash
 git clone https://github.com/JorgeZumbaMorales/pico-placa-api.git
-
+```
 2. Ingresar al proyecto:
-
+```bash
 cd pico-placa-api
-
+```
 3. Ejecutar la aplicación con Maven Wrapper:
 
 ```bash
