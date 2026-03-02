@@ -29,6 +29,12 @@ API REST desarrollada en **Spring Boot 3.5.1** para validar la circulación vehi
 
 ---
 
+## Ejecutar localmente
+
+```bash
+./mvnw spring-boot:run
+```
+
 ## 🌐 Deploy en Producción
 
 API disponible en:
