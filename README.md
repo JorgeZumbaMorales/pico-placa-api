@@ -29,12 +29,6 @@ API REST desarrollada en **Spring Boot 3.5.1** para validar la circulación vehi
 
 ---
 
-## Ejecutar localmente
-
-```bash
-./mvnw spring-boot:run
-```
-
 ## 🌐 Deploy en Producción
 
 API disponible en:
@@ -61,3 +55,26 @@ Body ejemplo:
   "fechaHora": "2026-03-02T14:00:00"
 }
 ```
+## ⚙️ Ejecutar Localmente (Backend)
+
+1. Clonar repositorio:
+
+git clone https://github.com/JorgeZumbaMorales/pico-placa-api.git
+
+2. Ingresar al proyecto:
+
+cd pico-placa-api
+
+3. Ejecutar la aplicación con Maven Wrapper:
+
+```bash
+./mvnw spring-boot:run
+```
+
+Disponible en:
+
+http://localhost:8080
+
+Swagger UI:
+
+http://localhost:8080/swagger-ui.html
